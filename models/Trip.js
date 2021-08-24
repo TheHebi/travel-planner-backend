@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Genre extends Model {}
+class Trip extends Model {}
 
-Genre.init(
+Trip.init(
   {
     name: {
       type: DataTypes.STRING,
@@ -13,10 +13,35 @@ Genre.init(
         len: [1, 30],
       },
     },
+    destination:{
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        isAlphanumeric:true
+      }
+    },
+    totalCost:{
+      type: DataTypes.FLOAT,
+      validate:{
+        isFloat:true
+      }
+    },
+    travelMethod:{
+      type: DataTypes.STRING
+    },
+    lodging:{
+      type: DataTypes.STRING
+    },
+    departure:{
+      type: DataTypes.DATE
+    },
+    return:{
+      type: DataTypes.DATE
+    }
   },
   {
     sequelize,
   }
 );
 
-module.exports = Genre;
+module.exports = Trip;

@@ -4,6 +4,6 @@ const tripData = [
   
 ];
 
-const seedTrips = () => Trip.bulkCreate(genreData);
+const seedTrips = () => Trip.bulkCreate(tripData);
 
 module.exports = seedTrips;
