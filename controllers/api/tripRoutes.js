@@ -1,16 +1,11 @@
 const express = require("express");
 const sequelize = require("../../config/connection");
 const router = express.Router();
-const Sequelize = require("sequelize");
 const db = require("../../models");
 
 // find all recipes
 router.get("/", async (req, res) => {
   try {
-    const recipes = await db.Recipe.findAll({
-      attributes: { exclude: [`createdAt`, `updatedAt`] },
-    });
-    res.status(200).json(recipes);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
