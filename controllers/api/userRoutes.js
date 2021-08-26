@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../models");
 const bcrypt = require(`bcrypt`);
-const { signToken } = require("../utils/auth");
+const { signToken } = require("../../utils/auth");
 
 // find all users
 router.get("/", async (req, res) => {
@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
         message: "incorrect username or password",
       });
     } else {
-      const passCheck = brcypt.compareSync(req.body.password, userLog.password);
+      const passCheck = bcrypt.compareSync(req.body.password, userLog.password);
       if (passCheck) {
         const token = await signToken(userLog);
         res.json({ token, user: userLog });

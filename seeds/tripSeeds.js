@@ -9,7 +9,7 @@ const tripData = [
         lodging:"Hotel",
         departure:"11/12/2021",
         return:"11/21/21",
-        userId: 1
+        UserId: 1,
     },
     {
         name:"PAX West",
@@ -19,7 +19,7 @@ const tripData = [
         lodging:"Hotel",
         departure:"09/02/2021",
         return:"09/07/21",
-        userId: 3
+        UserId: 3,
     },
     {
         name:"Mexico Getaway",
@@ -29,7 +29,7 @@ const tripData = [
         lodging:"Hotel",
         departure:"12/13/2021",
         return:"12/19/21",
-        userId: 4
+        UserId: 4,
     },
     {
         name:"Let's Go To Venice",
@@ -39,7 +39,7 @@ const tripData = [
         lodging:"Hotel",
         departure:"01/13/2022",
         return:"01/30/2022",
-        userId: 2
+        UserId: 2,
     },
   
 ];
