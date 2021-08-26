@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../models");
 const bcrypt = require(`bcrypt`);
-const { signToken } = require("../utils/auth");
+const { signToken } = require("../../utils/auth");
 
 // find all users
 router.get("/", async (req, res) => {
