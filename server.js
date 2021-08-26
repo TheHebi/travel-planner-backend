@@ -18,9 +18,6 @@ app.use(express.json());
 app.use(express.static('public'));
 
 
-
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
 app.use('/',allRoutes);
 
 sequelize.sync({ force: false }).then(function() {
