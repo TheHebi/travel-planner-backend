@@ -23,6 +23,20 @@ router.get("/:id", async (req, res) => {
     const user = await db.User.findOne({
       where: { id: req.params.id },
       attributes: { exclude: [`createdAt`, `updatedAt`] },
+      include: [
+        {
+          model: db.Trip,
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
+        },
+      //   {
+      //     model: db.Comment,
+      //     attributes: {exclude: [`createdAt`, `updatedAt`]}
+      //   },
+      //   {
+      //     model: db.Plan,
+      //     attributes: {exclude: [`createdAt`, `updatedAt`]}
+      //   }
+      ]
     });
     if (!user) {
       res.status(404).json({ message: `no user found with this id` });
