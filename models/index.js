@@ -4,21 +4,23 @@ const Comment = require("./Comment");
 const Budget = require("./Budget");
 const Plan = require("./Plan");
 
-// Comment.belongsTo(Trip);
-// Trip.hasMany(Comment);
+Trip.hasMany(Comment);
+Comment.belongsTo(Trip);
 
-// Comment.belongsTo(Plan);
-// Plan.hasMany(Comment);
+Plan.hasMany(Comment);
+Comment.belongsTo(Plan);
 
-// Trip.hasMany(Plan);
-// Plan.belongsTo(Trip);
+User.hasMany(Comment);
+Comment.belongsTo(User);
 
-// Trip.belongsToMany(User, {
-//   through: `UserTrip`,
-// });
-// User.belongsToMany(Trip, {
-//   through: `UserTrip`,
-// });
+Trip.hasMany(Plan);
+Plan.belongsTo(Trip);
+
+User.hasMany(Trip);
+Trip.belongsTo(User);
+
+User.hasMany(Plan);
+Plan.belongsTo(User);
 
 // Plan.belongsToMany(User, {
 //   through: `UserPlan`,
@@ -27,14 +29,14 @@ const Plan = require("./Plan");
 //   through: `UserPlan`,
 // });
 
-// Budget.belongsTo(Trip);
 // Trip.hasOne(Budget);
+// Budget.belongsTo(Trip);
 
-// Budget.belongsTo(Plan);
 // Plan.hasOne(Budget);
+// Budget.belongsTo(Plan);
 
-// Budget.belongsTo(User);
 // User.hasMany(Budget);
+// Budget.belongsTo(User);
 
 module.exports = {
   User,

@@ -1,7 +1,7 @@
-const Budget = require('../models/Budget');
+const {Budget} = require('../models');
 
 const budgetData = [
-  
+
 ];
 
 const seedBudgets = () => Budget.bulkCreate(budgetData);
