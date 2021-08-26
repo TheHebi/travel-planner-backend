@@ -14,7 +14,7 @@ const userData = [
   {
     username:'Kaleb',
     password:`password`,
-    email: `kaled@kaleb.com`
+    email: `kaleb@kaleb.com`
   },
   {
     username:'Kevin',
