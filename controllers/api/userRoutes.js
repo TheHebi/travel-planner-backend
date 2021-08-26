@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../models");
 const bcrypt = require(`bcrypt`);
-const { signToken, authMiddleWare } = require("../utils/auth");
+const { signToken } = require("../utils/auth");
 
 // find all users
 router.get("/", async (req, res) => {
@@ -71,7 +71,7 @@ router.post("/login", async (req, res) => {
 });
 
 // delete a user by id
-router.delete("/:id", authMiddleWare, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const delUser = await db.User.destroy({
       where: { id: req.params.id },
