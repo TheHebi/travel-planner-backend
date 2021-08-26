@@ -16,9 +16,6 @@ Trip.init(
     destination:{
       type: DataTypes.STRING,
       allowNull:false,
-      validate:{
-        isAlphanumeric:true
-      }
     },
     totalCost:{
       type: DataTypes.FLOAT,
