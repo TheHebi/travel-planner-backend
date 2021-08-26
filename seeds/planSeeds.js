@@ -1,6 +1,13 @@
 const Plan = require('../models/Plan');
 
 const planData = [
+    {
+        tripId:'',
+        name: '',
+        budget: ,
+        content:'',
+        userId: 
+    }
   
 ];
 
