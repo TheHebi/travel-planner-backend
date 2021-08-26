@@ -28,14 +28,14 @@ router.get("/:id", async (req, res) => {
           model: db.Trip,
           attributes: {exclude: [`createdAt`, `updatedAt`]}
         },
-      //   {
-      //     model: db.Comment,
-      //     attributes: {exclude: [`createdAt`, `updatedAt`]}
-      //   },
-      //   {
-      //     model: db.Plan,
-      //     attributes: {exclude: [`createdAt`, `updatedAt`]}
-      //   }
+        {
+          model: db.Comment,
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
+        },
+        {
+          model: db.Plan,
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
+        }
       ]
     });
     if (!user) {

@@ -7,8 +7,8 @@ const Plan = require("./Plan");
 Trip.hasMany(Comment);
 Comment.belongsTo(Trip);
 
-// Plan.hasMany(Comment);
-// Comment.belongsTo(Plan);
+Plan.hasMany(Comment);
+Comment.belongsTo(Plan);
 
 User.hasMany(Comment);
 Comment.belongsTo(User);

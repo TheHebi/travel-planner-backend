@@ -22,6 +22,20 @@ router.get("/:id", async (req, res) => {
     const trip = await db.Trip.findOne({
       where: { id: req.params.id },
       attributes: { exclude: [`createdAt`, `updatedAt`] },
+      include: [
+        {
+          model: db.Comment,
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
+        },
+        {
+          model: db.Plan,
+          attributes: {exclude: [`createdAt`, `updatedAt`]},
+          include: {
+            model: db.Comment,
+            attributes:{exclude:[`createdAt`, `updatedAt`]}
+          }
+        }
+      ]
     });
     if (!trip) {
       res.status(404).json({ message: `no trip found with this id` });
