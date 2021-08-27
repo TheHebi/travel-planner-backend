@@ -15,8 +15,7 @@ const allRoutes = require('./controllers');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Static directory
-app.use(express.static('public'));
+// cors
 app.use(cors())
 // app.use(cors({ origin:["https://app.herokuapp.com]}))
 
