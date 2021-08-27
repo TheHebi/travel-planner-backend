@@ -22,12 +22,23 @@ Trip.belongsTo(User);
 User.hasMany(Plan);
 Plan.belongsTo(User);
 
-// Plan.belongsToMany(User, {
-//   through: `UserPlan`,
-// });
-// User.belongsToMany(Plan, {
-//   through: `UserPlan`,
-// });
+Plan.belongsToMany(User, {
+  through: `UserPlan`,
+  as: `SavedUser`
+});
+User.belongsToMany(Plan, {
+  through: `UserPlan`,
+  as: `SavedPlan`
+});
+
+Trip.belongsToMany(User, {
+  through: `UserTrip`,
+  as: `SavedUser`
+});
+User.belongsToMany(Trip, {
+  through: `UserTrip`,
+  as: `SavedTrip`
+});
 
 // Trip.hasOne(Budget);
 // Budget.belongsTo(Trip);

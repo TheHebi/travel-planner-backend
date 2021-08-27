@@ -22,9 +22,9 @@ const commentData = [
         UserId:3,
     },
     {
-        TripId:1,
+        PlanId:3,
         content: "The Eifel Tower is so cool! I can't wait to see it in person!",
-        UserId:2,
+        UserId:1,
     },
     {
         TripId:2,
@@ -34,6 +34,21 @@ const commentData = [
     {
         TripId:2,
         content: "Can't wait to see you guys there!",
+        UserId:3,
+    },
+    {
+        PlanId:6,
+        content: "What board games are we playing?",
+        UserId:2,
+    },
+    {
+        PlanId:8,
+        content: "Don't forget your sunscreen!",
+        UserId:4,
+    },
+    {
+        PlanId:12,
+        content: "I can't wait to ride a gondola around Venice!",
         UserId:3,
     },
 ];

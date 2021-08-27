@@ -8,10 +8,6 @@ Trip.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isAlphanumeric: true,
-        len: [1, 30],
-      },
     },
     destination:{
       type: DataTypes.STRING,
