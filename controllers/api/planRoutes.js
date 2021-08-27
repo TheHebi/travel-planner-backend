@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
+const tokenAuth = require("../../utils/auth")
 
 // find all plans
 router.get("/", async (req, res) => {
@@ -39,7 +40,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create a new plan
-router.post("/", async (req, res) => {
+router.post("/", tokenAuth, async (req, res) => {
   try{
     const newPlan = await db.Plan.create(req.body);
     res.status(200).json(newPlan);
@@ -51,7 +52,7 @@ router.post("/", async (req, res) => {
 
 
 // delete a plan by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", tokenAuth, async (req, res) => {
   try {
     const delPlan = await db.Plan.destroy({
       where: { id: req.params.id }

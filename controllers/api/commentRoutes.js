@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
+const tokenAuth = require("../../utils/auth")
 
 // find all comments
 router.get("/", async (req, res) => {
@@ -33,7 +34,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create a new comment
-router.post("/", async (req, res) => {
+router.post("/",tokenAuth, async (req, res) => {
   try {
     const newComment = await db.Comment.create(req.body);
     res.status(200).json(newComment);
@@ -44,7 +45,7 @@ router.post("/", async (req, res) => {
 });
 
 // delete a comment by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", tokenAuth, async (req, res) => {
   try {
     const delComment = await db.Comment.destroy({
       where: { id: req.params.id },
