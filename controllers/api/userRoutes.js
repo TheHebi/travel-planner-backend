@@ -35,7 +35,19 @@ router.get("/:id", async (req, res) => {
         {
           model: db.Plan,
           attributes: {exclude: [`createdAt`, `updatedAt`]}
-        }
+        },
+        {
+          model: db.Plan,
+          as: `SavedPlan`,
+          attributes: {exclude: [`createdAt`, `updatedAt`]},
+          through:{attributes: {exclude: [`createdAt`,`updatedAt`]}}
+        },
+        {
+          model: db.Trip,
+          as: `SavedTrip`,
+          attributes: {exclude: [`createdAt`, `updatedAt`]},
+          through:{attributes: {exclude: [`createdAt`,`updatedAt`]}}
+        },
       ]
     });
     if (!user) {
