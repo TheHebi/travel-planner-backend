@@ -1,6 +1,7 @@
 const express = require('express');
-const sequelize = require("./config/connection")
-const compression = require('compression')
+const sequelize = require("./config/connection");
+const compression = require('compression');
+const cors = require('cors');
 
 // Sets up the Express App
 // =============================================================
@@ -16,7 +17,7 @@ app.use(express.json());
 
 // Static directory
 app.use(express.static('public'));
-
+app.use(cors());
 
 app.use('/',allRoutes);
 
