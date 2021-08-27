@@ -22,11 +22,19 @@ router.get("/:id", async (req, res) => {
     const plan = await db.Plan.findOne({
       where: { id: req.params.id},
       attributes: {exclude: ['createdAt', 'updatedAt']},
-      include: 
+      include: [
+
         {
           model: db.Comment,
           attributes: {exclude: [`createdAt`, `updatedAt`]}
+        },
+        {
+          model: db.User,
+          as:`SavedUser`,
+          attributes: {exclude: [`createdAt`, `updatedAt`]},
+          
         }
+      ]
       
     });
     if(!plan){
