@@ -3,6 +3,8 @@ const router = express.Router();
 const db = require("../../models");
 const bcrypt = require(`bcrypt`);
 const jwt = require("jsonwebtoken");
+const tokenAuth = require("../../utils/auth")
+
 
 // find all users
 router.get("/", async (req, res) => {
@@ -113,7 +115,7 @@ router.post("/login", async (req, res) => {
 });
 
 // delete a user by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", tokenAuth, async (req, res) => {
   try {
     const delUser = await db.User.destroy({
       where: { id: req.params.id },

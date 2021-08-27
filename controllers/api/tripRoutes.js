@@ -2,6 +2,7 @@ const express = require("express");
 const sequelize = require("../../config/connection");
 const router = express.Router();
 const db = require("../../models");
+const tokenAuth = require("../../utils/auth")
 
 // find all trips
 router.get("/", async (req, res) => {
@@ -48,7 +49,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create a new trip
-router.post("/", async (req, res) => {
+router.post("/", tokenAuth, async (req, res) => {
   try {
     const newTrip = await db.Trip.create(req.body);
     res.status(200).json(newTrip);
@@ -59,7 +60,7 @@ router.post("/", async (req, res) => {
 });
 
 // delete a trip by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", tokenAuth, async (req, res) => {
   try {
     const delTrip = await db.Trip.destroy({
       where: { id: req.params.id },
