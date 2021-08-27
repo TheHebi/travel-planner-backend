@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../models");
 const bcrypt = require(`bcrypt`);
-const { signToken } = require("../../utils/auth");
+const jwt = require("jsonwebtoken");
 
 // find all users
 router.get("/", async (req, res) => {
@@ -26,17 +26,29 @@ router.get("/:id", async (req, res) => {
       include: [
         {
           model: db.Trip,
-          attributes: {exclude: [`createdAt`, `updatedAt`]}
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
         },
-      //   {
-      //     model: db.Comment,
-      //     attributes: {exclude: [`createdAt`, `updatedAt`]}
-      //   },
-      //   {
-      //     model: db.Plan,
-      //     attributes: {exclude: [`createdAt`, `updatedAt`]}
-      //   }
-      ]
+        {
+          model: db.Comment,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+        },
+        {
+          model: db.Plan,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+        },
+        {
+          model: db.Plan,
+          as: `SavedPlan`,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          through: { attributes: { exclude: [`createdAt`, `updatedAt`] } },
+        },
+        {
+          model: db.Trip,
+          as: `SavedTrip`,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          through: { attributes: { exclude: [`createdAt`, `updatedAt`] } },
+        },
+      ],
     });
     if (!user) {
       res.status(404).json({ message: `no user found with this id` });
@@ -51,8 +63,17 @@ router.get("/:id", async (req, res) => {
 // create a new user
 router.post("/", async (req, res) => {
   try {
-    const newUser = await db.User.create(req.body);
-    res.status(200).json(newUser);
+    const user = await db.User.create(req.body);
+    const token = await jwt.sign({
+      name: user.username,
+      email: user.email,
+      id: user.id
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn:`2h`
+    })
+    res.status(200).json({ token, user });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -62,21 +83,28 @@ router.post("/", async (req, res) => {
 // user login
 router.post("/login", async (req, res) => {
   try {
-    const userLog = await db.User.findOne({
+    const user = await db.User.findOne({
       where: { username: req.body.username },
     });
-    if (!userLog) {
+    if (!user) {
       res.status(403).json({
         message: "incorrect username or password",
       });
+    } else if (!bcrypt.compareSync(req.body.password, user.password)) {
+      res.status(403).json({ message: "incorrect username or password" });
     } else {
-      const passCheck = bcrypt.compareSync(req.body.password, userLog.password);
-      if (passCheck) {
-        const token = await signToken(userLog);
-        res.json({ token, user: userLog });
-      } else {
-        res.status(403).json({ message: "incorrect username or password" });
-      }
+      const token = await jwt.sign(
+        {
+          name: user.username,
+          email: user.email,
+          id: user.id,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: `2h`,
+        }
+      );
+      res.json({ token, user });
     }
   } catch (err) {
     console.log(err);

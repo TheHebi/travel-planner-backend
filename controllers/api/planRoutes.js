@@ -20,7 +20,13 @@ router.get("/:id", async (req, res) => {
   try {
     const plan = await db.Plan.findOne({
       where: { id: req.params.id},
-      attributes: {exclude: ['createdAt', 'updatedAt']}
+      attributes: {exclude: ['createdAt', 'updatedAt']},
+      include: 
+        {
+          model: db.Comment,
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
+        }
+      
     });
     if(!plan){
       res.status(404).json({ message: 'no plan found with this id' });
