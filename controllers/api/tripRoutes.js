@@ -99,9 +99,6 @@ router.put("/:id", tokenAuth, async (req, res) => {
       {
         name: req.body.name,
         destination: req.body.destination,
-        totalCost: req.body.totalCost,
-        travelMethod: req.body.travelMethod,
-        lodging: req.body.lodging,
         departure: req.body.departure,
         return: req.body.return,
       },
