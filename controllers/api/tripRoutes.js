@@ -65,6 +65,27 @@ router.post("/", tokenAuth, async (req, res) => {
   }
 });
 
+// update a trip
+router.put("/:id", tokenAuth, async (req,res)=>{
+  try{
+      db.Trip.update({
+        name: req.body.name,
+        destination: req.body.destination,
+        totalCost: req.body.totalCost,
+        travelMethod: req.body.travelMethod,
+        lodging: req.body.lodging,
+        departure: req.body.departure,
+        return: req.body.return
+      },
+      {where:{id:req.params.id}})
+      res.status(200).json({message: `trip updated`})
+    
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
+
 // delete a trip by id
 router.delete("/:id", tokenAuth, async (req, res) => {
   try {
