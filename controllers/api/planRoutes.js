@@ -31,11 +31,9 @@ router.get("/:id", async (req, res) => {
         {
           model: db.User,
           as:`SavedUser`,
-          attributes: {exclude: [`createdAt`, `updatedAt`]},
-          
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
         }
       ]
-      
     });
     if(!plan){
       res.status(404).json({ message: 'no plan found with this id' });
