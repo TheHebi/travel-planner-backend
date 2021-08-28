@@ -22,6 +22,10 @@ router.get("/:id", async (req, res) => {
     const comment = await db.Comment.findOne({
       where: { id: req.params.id },
       attributes: { exclude: [`createdAt`, `updatedAt`] },
+      include: {
+        model: db.Comment,
+        attributes: { exclude: [`createdAt`, `updatedAt`] },
+      }
     });
     if (!comment) {
       res.status(404).json({ message: `no comment found with this id` });
