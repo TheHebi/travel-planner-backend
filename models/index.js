@@ -43,8 +43,8 @@ User.belongsToMany(Trip, {
   as: `SavedTrip`
 });
 
-// Trip.hasMany(Budget);
-// Budget.belongsTo(Trip);
+Trip.hasMany(Budget);
+Budget.belongsTo(Trip);
 
 // Plan.hasOne(Budget);
 // Budget.belongsTo(Plan);
