@@ -1,6 +1,6 @@
 const seedTrips = require('./tripSeeds');
 const seedUsers = require('./userSeeds');
-// const seedBudgets = require('./budgetSeeds');
+const seedBudgets = require('./budgetSeeds');
 const seedComments = require('./commentSeeds');
 const seedPlans = require('./planSeeds');
 const seedSavedPlans = require('./userPlanSeeds');
@@ -28,6 +28,9 @@ const seedAll = async () => {
 
   await seedSavedTrips();
   console.log('\n----- SAVED TRIPS SEEDED -----\n');
+
+  await seedBudgets();
+  console.log('\n----- BUDGETS SEEDED -----\n');
 
   process.exit(0);
 };
