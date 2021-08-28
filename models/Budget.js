@@ -5,7 +5,6 @@ class Budget extends Model {}
 
 Budget.init(
   {
-    
   },
   {
     sequelize,

@@ -18,6 +18,9 @@ Comment.belongsTo(User);
 Trip.hasMany(Plan);
 Plan.belongsTo(Trip);
 
+Comment.hasMany(Comment)
+Comment.belongsTo(Comment)
+
 User.hasMany(Trip);
 Trip.belongsTo(User);
 

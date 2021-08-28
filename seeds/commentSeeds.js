@@ -51,6 +51,11 @@ const commentData = [
         content: "I can't wait to ride a gondola around Venice!",
         UserId:3,
     },
+    {
+        CommentId:1,
+        content: "Hopefully we see the Eifel Tower!",
+        UserId:3,
+    },
 ];
 
 const seedComments = () => Comment.bulkCreate(commentData);

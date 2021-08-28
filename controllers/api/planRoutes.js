@@ -56,6 +56,23 @@ router.post("/", tokenAuth, async (req, res) => {
   }
 });
 
+// update a plan
+router.put("/:id", tokenAuth, async (req,res)=>{
+  try{
+      db.Plan.update({
+        name: req.body.name,
+        budget: req.body.budget,
+        content: req.body.content
+      },
+      {where:{id:req.params.id}})
+      res.status(200).json({message: `plan updated`})
+    
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
+
 // delete a plan by id
 router.delete("/:id", tokenAuth, async (req, res) => {
   try {
