@@ -13,18 +13,6 @@ Trip.init(
       type: DataTypes.STRING,
       allowNull:false,
     },
-    totalCost:{
-      type: DataTypes.FLOAT,
-      validate:{
-        isFloat:true
-      }
-    },
-    travelMethod:{
-      type: DataTypes.STRING
-    },
-    lodging:{
-      type: DataTypes.STRING
-    },
     departure:{
       type: DataTypes.DATE
     },
