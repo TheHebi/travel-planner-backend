@@ -16,6 +16,9 @@ Comment.belongsTo(User);
 Trip.hasMany(Plan);
 Plan.belongsTo(Trip);
 
+Comment.hasMany(Comment)
+Comment.belongsTo(Comment)
+
 User.hasMany(Trip);
 Trip.belongsTo(User);
 
@@ -40,7 +43,7 @@ User.belongsToMany(Trip, {
   as: `SavedTrip`
 });
 
-// Trip.hasOne(Budget);
+// Trip.hasMany(Budget);
 // Budget.belongsTo(Trip);
 
 // Plan.hasOne(Budget);
