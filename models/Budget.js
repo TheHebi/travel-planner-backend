@@ -5,15 +5,6 @@ class Budget extends Model {}
 
 Budget.init(
   {
-    category:{
-      type:DataTypes.STRING
-    },
-    description:{
-      type:DataTypes.STRING
-    },
-    cost:{
-      type:DataTypes.FLOAT
-    }
   },
   {
     sequelize,
