@@ -31,11 +31,9 @@ router.get("/:id", async (req, res) => {
         {
           model: db.User,
           as:`SavedUser`,
-          attributes: {exclude: [`createdAt`, `updatedAt`]},
-          
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
         }
       ]
-      
     });
     if(!plan){
       res.status(404).json({ message: 'no plan found with this id' });
@@ -57,7 +55,6 @@ router.post("/", tokenAuth, async (req, res) => {
     res.status(500).json(err)
   }
 });
-
 
 // delete a plan by id
 router.delete("/:id", tokenAuth, async (req, res) => {

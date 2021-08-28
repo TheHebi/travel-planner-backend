@@ -3,6 +3,8 @@ const Trip = require("./Trip");
 const Comment = require("./Comment");
 const Budget = require("./Budget");
 const Plan = require("./Plan");
+const BudgetCategory = require("./BudgetCategory");
+const BudgetItem = require("./BudgetItem");
 
 Trip.hasMany(Comment);
 Comment.belongsTo(Trip);
@@ -39,6 +41,12 @@ User.belongsToMany(Trip, {
   through: `UserTrip`,
   as: `SavedTrip`
 });
+
+Trip.hasMany(Budget);
+Budget.belongsTo(User);
+
+BudgetItem.belongsTo(BudgetCategory);
+BudgetCategory.belongsTo(Budget);
 
 // Trip.hasOne(Budget);
 // Budget.belongsTo(Trip);

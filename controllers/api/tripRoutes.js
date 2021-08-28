@@ -26,7 +26,11 @@ router.get("/:id", async (req, res) => {
       include: [
         {
           model: db.Comment,
-          attributes: {exclude: [`createdAt`, `updatedAt`]}
+          attributes: {exclude: [`createdAt`, `updatedAt`]},
+          include: {
+            model: db.User,
+            as: `SavedUser`
+          }
         },
         {
           model: db.Plan,
