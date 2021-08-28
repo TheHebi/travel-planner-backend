@@ -43,19 +43,16 @@ User.belongsToMany(Trip, {
 });
 
 Trip.hasMany(Budget);
+Budget.belongsTo(Trip);
+
+User.hasMany(Budget);
 Budget.belongsTo(User);
 
-BudgetItem.belongsTo(BudgetCategory);
+Budget.hasMany(BudgetCategory);
 BudgetCategory.belongsTo(Budget);
 
-// Trip.hasOne(Budget);
-// Budget.belongsTo(Trip);
-
-// Plan.hasOne(Budget);
-// Budget.belongsTo(Plan);
-
-// User.hasMany(Budget);
-// Budget.belongsTo(User);
+BudgetCategory.hasMany(BudgetItem);
+BudgetItem.belongsTo(BudgetCategory);
 
 module.exports = {
   User,
@@ -63,4 +60,6 @@ module.exports = {
   Comment,
   Budget,
   Plan,
+  BudgetCategory,
+  BudgetItem
 };

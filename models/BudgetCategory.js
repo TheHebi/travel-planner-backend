@@ -5,10 +5,6 @@ class BudgetCategory extends Model {}
 
 BudgetCategory.init(
   {
-    budgetItem: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     description: {
         type: DataTypes.STRING,
         allowNull: false

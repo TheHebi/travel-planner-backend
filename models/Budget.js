@@ -5,9 +5,7 @@ class Budget extends Model {}
 
 Budget.init(
   {
-    budgetTotal: {
-      type: DataTypes.FLOAT,
-    }
+    
   },
   {
     sequelize,
