@@ -26,39 +26,39 @@ router.get("/:id", async (req, res) => {
       include: [
         {
           model: db.Comment,
-          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          attributes: { exclude: [`updatedAt`,`TripId`,`PlanId`,`UserId`,`CommentId`] },
           include: [
             {
               model: db.User,
-              attributes: { exclude: [`createdAt`, `updatedAt`] },
+              attributes: { exclude: [`createdAt`, `updatedAt`,`password`,`email`] },
             },
             {
               model: db.Comment,
-              attributes: { exclude: [`createdAt`, `updatedAt`] },
+              attributes: { exclude: [`updatedAt`,`TripId`,`PlanId`,`UserId`,`CommentId`] },
               include: {
                 model: db.User,
-                attributes: { exclude: [`createdAt`, `updatedAt`] },
+                attributes: { exclude: [`createdAt`, `updatedAt`,`password`,`email`] },
               },
             },
           ],
         },
         {
           model: db.Plan,
-          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          attributes: { exclude: [`createdAt`, `updatedAt`,`TripId`,`UserId`] },
           include: {
             model: db.Comment,
-            attributes: { exclude: [`createdAt`, `updatedAt`] },
+            attributes: { exclude: [`updatedAt`,`TripId`,`PlanId`,`UserId`,`CommentId`] },
             include: [
               {
                 model: db.User,
-                attributes: { exclude: [`createdAt`, `updatedAt`] },
+                attributes: { exclude: [`createdAt`, `updatedAt`,`password`,`email`] },
               },
               {
                 model: db.Comment,
-                attributes: { exclude: [`createdAt`, `updatedAt`] },
+                attributes: { exclude: [`updatedAt`,`TripId`,`PlanId`,`UserId`,`CommentId`] },
                 include: {
                   model: db.User,
-                  attributes: { exclude: [`createdAt`, `updatedAt`] },
+                  attributes: { exclude: [`createdAt`, `updatedAt`,`password`,`email`] },
                 },
               },
             ],
@@ -67,8 +67,16 @@ router.get("/:id", async (req, res) => {
         {
           model: db.User,
           as: `SavedUser`,
-          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          attributes: { exclude: [`createdAt`, `updatedAt`,`password`,`email`,`UserTrip`] },
         },
+        {
+          model: db.Budget,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          include:{
+            model: db.User,
+            attributes: { exclude: [`createdAt`, `updatedAt`,`password`,`email`] },
+          }
+        }
       ],
     });
     if (!trip) {
