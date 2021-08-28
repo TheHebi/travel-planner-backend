@@ -22,6 +22,10 @@ router.get("/:id", async (req, res) => {
     const comment = await db.Comment.findOne({
       where: { id: req.params.id },
       attributes: { exclude: [`createdAt`, `updatedAt`] },
+      include: {
+        model: db.Comment,
+        attributes: { exclude: [`createdAt`, `updatedAt`] },
+      }
     });
     if (!comment) {
       res.status(404).json({ message: `no comment found with this id` });
@@ -43,6 +47,21 @@ router.post("/",tokenAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// update a comment
+router.put("/:id", tokenAuth, async (req,res)=>{
+  try{
+      db.Comment.update({
+        content: req.body.content,
+      },
+      {where:{id:req.params.id}})
+      res.status(200).json({message: `user updated`})
+    
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
 
 // delete a comment by id
 router.delete("/:id", tokenAuth, async (req, res) => {

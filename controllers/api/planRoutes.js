@@ -22,12 +22,18 @@ router.get("/:id", async (req, res) => {
     const plan = await db.Plan.findOne({
       where: { id: req.params.id},
       attributes: {exclude: ['createdAt', 'updatedAt']},
-      include: 
+      include: [
+
         {
           model: db.Comment,
           attributes: {exclude: [`createdAt`, `updatedAt`]}
+        },
+        {
+          model: db.User,
+          as:`SavedUser`,
+          attributes: {exclude: [`createdAt`, `updatedAt`]}
         }
-      
+      ]
     });
     if(!plan){
       res.status(404).json({ message: 'no plan found with this id' });
@@ -50,6 +56,22 @@ router.post("/", tokenAuth, async (req, res) => {
   }
 });
 
+// update a plan
+router.put("/:id", tokenAuth, async (req,res)=>{
+  try{
+      db.Plan.update({
+        name: req.body.name,
+        budget: req.body.budget,
+        content: req.body.content
+      },
+      {where:{id:req.params.id}})
+      res.status(200).json({message: `plan updated`})
+    
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
 
 // delete a plan by id
 router.delete("/:id", tokenAuth, async (req, res) => {

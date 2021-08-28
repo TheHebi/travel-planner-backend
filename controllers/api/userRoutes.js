@@ -62,6 +62,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// update a user
+router.put("/:id", tokenAuth, async (req,res)=>{
+  try{
+      db.User.update({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email
+      },
+      {where:{id:req.params.id}})
+      res.status(200).json({message: `user updated`})
+    
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
+
 // create a new user
 router.post("/", async (req, res) => {
   try {
