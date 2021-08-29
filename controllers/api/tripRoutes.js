@@ -47,18 +47,6 @@ router.get("/:id", async (req, res) => {
           attributes: { exclude: [`createdAt`, `updatedAt`] },
           include: {
             model: db.Comment,
-<<<<<<< HEAD
-            attributes:{exclude:[`createdAt`, `updatedAt`]}
-          }
-        },
-        {
-          model: db.User,
-          as:`SavedUser`,
-          attributes: {exclude: [`createdAt`, `updatedAt`]},
-          
-        }
-      ]
-=======
             attributes: { exclude: [`createdAt`, `updatedAt`] },
             include: [
               {
@@ -82,7 +70,6 @@ router.get("/:id", async (req, res) => {
           attributes: { exclude: [`createdAt`, `updatedAt`] },
         },
       ],
->>>>>>> c65cba5e2bca5ebe5b88bc8245dd7f652180d200
     });
     if (!trip) {
       res.status(404).json({ message: `no trip found with this id` });
