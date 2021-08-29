@@ -1,23 +1,21 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Trip extends Model {}
+class Plan extends Model {}
 
-Trip.init(
+Plan.init(
   {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    destination:{
-      type: DataTypes.STRING,
+    budget:{
+      type: DataTypes.FLOAT,
       allowNull:false,
     },
-    departure:{
-      type: DataTypes.DATE
-    },
-    return:{
-      type: DataTypes.DATE
+    content:{
+        type:DataTypes.STRING,
+        allowNull:false
     }
   },
   {
@@ -25,4 +23,4 @@ Trip.init(
   }
 );
 
-module.exports = Trip;
+module.exports = Plan;
