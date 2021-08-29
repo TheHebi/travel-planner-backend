@@ -50,6 +50,18 @@ router.get("/:id", async (req, res) => {
           attributes: { exclude: [`createdAt`, `updatedAt`] },
           through: { attributes: { exclude: [`createdAt`, `updatedAt`] } },
         },
+        {
+          model: db.Budget,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          include:{
+            model: db.BudgetCategory,
+            attributes: { exclude: [`createdAt`, `updatedAt`] },
+            include:{
+              model: db.BudgetItem,
+              attributes: { exclude: [`createdAt`, `updatedAt`] },
+            }
+          }
+        }
       ],
     });
     if (!user) {
