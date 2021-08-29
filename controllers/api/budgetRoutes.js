@@ -1,7 +1,39 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
-const tokenAuth = require("../../utils/auth")
+const tokenAuth = require("../../utils/auth");
+const { Op } = require("sequelize");
+
+// find one budget by trip id
+router.get("/trips/:tripId", async (req, res) => {
+  try {
+    const budget = await db.Budget.findAll({
+      // INCLUDE OP AND STATEMENT FOR LOGGED IN USER ID
+      where: {
+        [Op.and]: [
+          { TripId: req.params.tripId }
+          // ADD USER ID CHECK HERE
+        ]
+      },
+      attributes: { exclude: [`createdAt`, `updatedAt`] },
+      include: {
+        model: db.BudgetCategory,
+        attributes: { exclude: [`createdAt`, `updatedAt`] },
+        include: {
+          model: db.BudgetItem,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+        }
+      }
+    });
+    if (!budget) {
+      res.status(404).json({ message: `no budget found with this TripId` });
+    };
+    res.status(200).json(budget)
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+})
 
 // find all budgets
 router.get("/", async (req, res) => {
