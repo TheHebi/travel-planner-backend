@@ -5,8 +5,9 @@ class Budget extends Model {}
 
 Budget.init(
   {
-    budgetTotal: {
-      type: DataTypes.FLOAT,
+    total:{
+      type: DataTypes.INTEGER,
+      defaultValue:0
     }
   },
   {
