@@ -169,6 +169,30 @@ router.put("/:id", tokenAuth, async (req, res) => {
   }
 });
 
+// add a saved trip
+router.post('/savedtrips', async (req, res) => {
+  try {
+      const saveUser = await db.User.findByPk(req.body.UserId);
+      await saveUser.addSavedTrip(req.body.TripId);
+      res.status(200).json({message:`Saved Trip Added`})
+  } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+  }
+});
+
+// remove a saved trip
+router.delete('/savedtrips', async (req, res) => {
+  try {
+      const saveUser = await db.User.findByPk(req.body.UserId);
+      await saveUser.removeSavedTrip(req.body.TripId);
+      res.status(200).json({message:`Saved Trip Removed`})
+  } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+  }
+});
+
 // delete a trip by id
 router.delete("/:id", tokenAuth, async (req, res) => {
   try {
