@@ -7,7 +7,7 @@ const cors = require('cors')
 // =============================================================
 const app = express();
 app.use(compression())
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const allRoutes = require('./controllers');
 
 
