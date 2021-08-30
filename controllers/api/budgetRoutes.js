@@ -55,7 +55,7 @@ router.post("/", tokenAuth, async (req, res) => {
 // update a budget 
 router.put("/:id", tokenAuth, async (req, res) => {
   try {
-    db.Comment.update(
+    db.Budget.update(
       {
         total: req.body.total,
       },
