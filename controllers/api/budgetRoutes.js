@@ -84,6 +84,22 @@ router.post("/", tokenAuth, async (req, res) => {
   }
 });
 
+// update a budget 
+router.put("/:id", tokenAuth, async (req, res) => {
+  try {
+    db.Comment.update(
+      {
+        total: req.body.total,
+      },
+      { where: { id: req.params.id } }
+    );
+    res.status(200).json({ message: `budget updated` });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 // delete a budget by id
 router.delete("/:id", tokenAuth, async (req, res) => {
   try {
