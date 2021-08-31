@@ -16,6 +16,28 @@ router.get("/", async (req, res) => {
   }
 });
 
+// find all comments assosciated to a trip
+router.get("/trips/:tripId", async (req, res) => {
+  try {
+    const comments = await db.Comment.findAll({
+      attributes: { exclude: [`createdAt`, `updatedAt`] },
+      where: {
+        TripId: req.params.tripId
+      },
+      include: {
+        model: db.User,
+        attributes: {
+          exclude: [`createdAt`, `updatedAt`, `password`, `email`],
+        },
+      },
+    });
+    res.status(200).json(comments);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 // find one comment by id tag
 router.get("/:id", async (req, res) => {
   try {

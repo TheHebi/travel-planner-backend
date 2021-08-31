@@ -2,18 +2,15 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../models");
 const tokenAuth = require("../../utils/auth");
-const { Op } = require("sequelize");
 
 // find one budget by trip id
-router.get("/trips/:tripId", async (req, res) => {
+router.get("/trips/:tripId/:userId", async (req, res) => {
   try {
     const budget = await db.Budget.findAll({
       // INCLUDE OP AND STATEMENT FOR LOGGED IN USER ID
       where: {
-        [Op.and]: [
-          { TripId: req.params.tripId }
-          // ADD USER ID CHECK HERE
-        ]
+        TripId: req.params.tripId,
+        UserId: req.params.userId
       },
       attributes: { exclude: [`createdAt`, `updatedAt`] },
       include: {
@@ -87,7 +84,7 @@ router.post("/", tokenAuth, async (req, res) => {
 // update a budget 
 router.put("/:id", tokenAuth, async (req, res) => {
   try {
-    db.Comment.update(
+    db.Budget.update(
       {
         total: req.body.total,
       },
