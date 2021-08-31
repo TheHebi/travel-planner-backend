@@ -62,7 +62,8 @@ router.put("/:id", tokenAuth, async (req,res)=>{
       db.Plan.update({
         name: req.body.name,
         budget: req.body.budget,
-        content: req.body.content
+        content: req.body.content,
+        date: req.body.date
       },
       {where:{id:req.params.id}})
       res.status(200).json({message: `plan updated`})

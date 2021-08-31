@@ -17,7 +17,7 @@ app.use(express.json());
 
 // cors
 app.use(cors())
-// app.use(cors({ origin:["https://app.herokuapp.com]}))
+// app.use(cors({ origin:["https://trips-refocused.herokuapp.com"]}))
 
 
 app.use('/',allRoutes);

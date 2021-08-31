@@ -16,6 +16,9 @@ Plan.init(
     content:{
         type:DataTypes.STRING,
         allowNull:false
+    },
+    date: {
+      type: DataTypes.DATE
     }
   },
   {
