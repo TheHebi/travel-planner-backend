@@ -62,7 +62,8 @@ router.put("/:id", tokenAuth, async (req,res)=>{
       db.Plan.update({
         name: req.body.name,
         budget: req.body.budget,
-        content: req.body.content
+        content: req.body.content,
+        date: req.body.date
       },
       {where:{id:req.params.id}})
       res.status(200).json({message: `plan updated`})
@@ -72,6 +73,30 @@ router.put("/:id", tokenAuth, async (req,res)=>{
     res.status(500).json(err)
   }
 })
+
+// add a saved plan
+router.post('/savedplans', async (req, res) => {
+  try {
+      const saveUser = await db.User.findByPk(req.body.UserId);
+      await saveUser.addSavedPlan(req.body.PlanId);
+      res.status(200).json({message:`Saved Plan Added`})
+  } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+  }
+});
+
+// remove a saved plan
+router.delete('/savedplans', async (req, res) => {
+  try {
+      const saveUser = await db.User.findByPk(req.body.UserId);
+      await saveUser.removeSavedPlan(req.body.PlanId);
+      res.status(200).json({message:`Saved Plan Removed`})
+  } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+  }
+});
 
 // delete a plan by id
 router.delete("/:id", tokenAuth, async (req, res) => {

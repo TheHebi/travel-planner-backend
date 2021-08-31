@@ -1,7 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
-const tokenAuth = require("../../utils/auth")
+const tokenAuth = require("../../utils/auth");
+
+// find one budget by trip id
+router.get("/trips/:tripId/:userId", async (req, res) => {
+  try {
+    const budget = await db.Budget.findAll({
+      // INCLUDE OP AND STATEMENT FOR LOGGED IN USER ID
+      where: {
+        TripId: req.params.tripId,
+        UserId: req.params.userId
+      },
+      attributes: { exclude: [`createdAt`, `updatedAt`] },
+      include: {
+        model: db.BudgetCategory,
+        attributes: { exclude: [`createdAt`, `updatedAt`] },
+        include: {
+          model: db.BudgetItem,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+        }
+      }
+    });
+    if (!budget) {
+      res.status(404).json({ message: `no budget found with this TripId` });
+    };
+    res.status(200).json(budget)
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+})
 
 // find all budgets
 router.get("/", async (req, res) => {
@@ -49,6 +78,22 @@ router.post("/", tokenAuth, async (req, res) => {
   }catch(err){
     console.log(err)
     res.status(500).json(err)
+  }
+});
+
+// update a budget 
+router.put("/:id", tokenAuth, async (req, res) => {
+  try {
+    db.Budget.update(
+      {
+        total: req.body.total,
+      },
+      { where: { id: req.params.id } }
+    );
+    res.status(200).json({ message: `budget updated` });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 

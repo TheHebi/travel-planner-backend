@@ -31,7 +31,7 @@ const budgetCategoryData = [
     },
     {
         BudgetId: 2,
-        description: `The Louvre`
+        description: `The Louvre and other Museums`
     },
     {
         BudgetId: 3,

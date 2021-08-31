@@ -1,6 +1,6 @@
 # Trips Refocused Server
 
-Server hosted <a href="">here</a>.
+Server hosted <a href="https://trips-refocused-server.herokuapp.com/">here</a>.
 
 Trips Refocused deployed <a href="">here</a>.
 
@@ -20,7 +20,7 @@ The purpose of this repository is to create and maintain an external server for 
 
 ## Instructions
 
-You can access the server <a href="">here</a>, or you can use the link address with a tool like <a href="https://insomnia.rest/download">Insomnia</a> to access the information.
+You can access the server <a href="https://trips-refocused-server.herokuapp.com/">here</a>.
 
 The folowing routes are available:
 
