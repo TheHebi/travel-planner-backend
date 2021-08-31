@@ -51,7 +51,7 @@ router.post("/", tokenAuth, async (req, res) => {
 // update a budget category
 router.put("/:id", tokenAuth, async (req, res) => {
   try {
-    db.BudgetCategory.update(
+    await db.BudgetCategory.update(
       {
         description: req.body.description,
       },
