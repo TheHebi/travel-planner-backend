@@ -38,6 +38,7 @@ router.get("/:id", async (req, res) => {
             },
             {
               model: db.Comment,
+              as:`SubComment`,
               attributes: {
                 exclude: [
                   `updatedAt`,
