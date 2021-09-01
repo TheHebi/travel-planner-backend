@@ -29,6 +29,11 @@ router.get("/:id", async (req, res) => {
         {
           model: db.Trip,
           attributes: { exclude: [`createdAt`, `updatedAt`] },
+          include:{
+            model: db.User,
+            attributes: { exclude: [`createdAt`, `updatedAt`] },
+            as: `SavedUser`
+          }
         },
         {
           model: db.Comment,
@@ -50,6 +55,18 @@ router.get("/:id", async (req, res) => {
           attributes: { exclude: [`createdAt`, `updatedAt`] },
           through: { attributes: { exclude: [`createdAt`, `updatedAt`] } },
         },
+        {
+          model: db.Budget,
+          attributes: { exclude: [`createdAt`, `updatedAt`] },
+          include:{
+            model: db.BudgetCategory,
+            attributes: { exclude: [`createdAt`, `updatedAt`] },
+            include:{
+              model: db.BudgetItem,
+              attributes: { exclude: [`createdAt`, `updatedAt`] },
+            }
+          }
+        }
       ],
     });
     if (!user) {

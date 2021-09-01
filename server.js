@@ -1,7 +1,7 @@
 const express = require('express');
-const sequelize = require("./config/connection")
-const compression = require('compression')
-const cors = require('cors')
+const sequelize = require("./config/connection");
+const compression = require('compression');
+const cors = require('cors');
 
 // Sets up the Express App
 // =============================================================
@@ -17,7 +17,7 @@ app.use(express.json());
 
 // cors
 app.use(cors())
-// app.use(cors({ origin:["https://app.herokuapp.com]}))
+// app.use(cors({ origin:["https://trips-refocused.herokuapp.com"]}))
 
 
 app.use('/',allRoutes);
