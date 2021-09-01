@@ -25,6 +25,12 @@ router.get("/:id", async (req, res) => {
       attributes: { exclude: [`createdAt`, `updatedAt`] },
       include: [
         {
+          model: db.User,
+          attributes: {
+            exclude: [`createdAt`, `updatedAt`, `password`, `email`],
+          },
+        },
+        {
           model: db.Comment,
           attributes: {
             exclude: [`updatedAt`, `TripId`, `PlanId`, `UserId`, `CommentId`],
@@ -38,7 +44,7 @@ router.get("/:id", async (req, res) => {
             },
             {
               model: db.Comment,
-              as:`SubComment`,
+              as: `SubComment`,
               attributes: {
                 exclude: [
                   `updatedAt`,
@@ -128,6 +134,31 @@ router.get("/:id", async (req, res) => {
             },
           ],
         },
+        {
+          model: db.Plan,
+          attributes: {
+            exclude: [`createdAt`, `updatedAt`]
+          },
+          include: [
+            {
+              model: db.Comment,
+              attributes: { exclude: [`updatedAt`] },
+              include: [{
+                model: db.User,
+                attributes: { exclude: [`createdAt`, `updatedAt`, `password`, `email`] },
+              }]
+            },
+            {
+              model: db.User,
+              attributes: { exclude: [`createdAt`, `updatedAt`, `password`, `email`] },
+            },
+            {
+              model: db.User,
+              as: `SavedUser`,
+              attributes: { exclude: [`createdAt`, `updatedAt`, `password`, `email`] },
+            }
+          ]
+        }
       ],
     });
     if (!trip) {
