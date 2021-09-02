@@ -16,6 +16,47 @@ router.get("/", async (req, res) => {
   }
 });
 
+// find all plans by trip id
+router.get('/trips/:tripId', async (req, res) => {
+  try {
+    const plans = await db.Plan.findAll({
+      where: {
+        TripId: req.params.tripId,
+      },
+      attributes: {exclude: [`createdAt`, `updatedAt`]},
+      include: [
+        {
+          model: db.Comment,
+          attributes: {exclude: [`updatedAt`]},
+          include: [
+            {
+              model: db.User,
+              attributes: { exclude: [`createdAt`, `updatedAt`, `password`, `email`] }
+            }
+          ]
+        },
+        {
+          model: db.User,
+          attributes: {exclude: [`createdAt`, `updatedAt`, `password`, `email`]}
+        },
+        {
+          model: db.User,
+          as: `SavedUser`,
+          attributes: {exclude: [`createdAt`, `updatedAt`, `password`, `email`]}
+        }
+      ]
+    });
+
+    if (!plans) {
+      res.status(404).json({message: 'No plans associated with this trip'});
+    }
+    res.status(200).json(plans);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+})
+
 // find one plan by id tag
 router.get("/:id", async (req, res) => {
   try {
@@ -23,15 +64,18 @@ router.get("/:id", async (req, res) => {
       where: { id: req.params.id},
       attributes: {exclude: ['createdAt', 'updatedAt']},
       include: [
-
         {
           model: db.Comment,
           attributes: {exclude: [`createdAt`, `updatedAt`]}
         },
         {
           model: db.User,
+          attributes: {exclude: [`createdAt`, `updatedAt`, `password`, `email`]}
+        },
+        {
+          model: db.User,
           as:`SavedUser`,
-          attributes: {exclude: [`createdAt`, `updatedAt`]}
+          attributes: {exclude: [`createdAt`, `updatedAt`, `password`, `email`]}
         }
       ]
     });
@@ -89,6 +133,7 @@ router.post('/savedplans', async (req, res) => {
 // remove a saved plan
 router.delete('/savedplans', async (req, res) => {
   try {
+    console.log(req.body)
       const saveUser = await db.User.findByPk(req.body.UserId);
       await saveUser.removeSavedPlan(req.body.PlanId);
       res.status(200).json({message:`Saved Plan Removed`})

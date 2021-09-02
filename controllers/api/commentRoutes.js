@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
-const tokenAuth = require("../../utils/auth")
+const tokenAuth = require("../../utils/auth");
 
 // find all comments
 router.get("/", async (req, res) => {
@@ -20,16 +20,33 @@ router.get("/", async (req, res) => {
 router.get("/trips/:tripId", async (req, res) => {
   try {
     const comments = await db.Comment.findAll({
-      attributes: { exclude: [`createdAt`, `updatedAt`] },
+      attributes: { exclude: [`updatedAt`] },
       where: {
-        TripId: req.params.tripId
+        TripId: req.params.tripId,
       },
-      include: {
-        model: db.User,
-        attributes: {
-          exclude: [`createdAt`, `updatedAt`, `password`, `email`],
+      include: [
+        {
+          model: db.User,
+          attributes: {
+            exclude: [`createdAt`, `updatedAt`, `password`, `email`],
+          },
         },
-      },
+        {
+          model: db.Comment,
+          as: `SubComment`,
+          attributes: {
+            exclude: [`updatedAt`],
+          },
+          include: [
+            {
+              model: db.User,
+              attributes: {
+                exclude: [`createdAt`, `updatedAt`, `password`, `email`],
+              },
+            },
+          ],
+        },
+      ],
     });
     res.status(200).json(comments);
   } catch (err) {
@@ -43,11 +60,30 @@ router.get("/:id", async (req, res) => {
   try {
     const comment = await db.Comment.findOne({
       where: { id: req.params.id },
-      attributes: { exclude: [`createdAt`, `updatedAt`] },
-      include: {
-        model: db.Comment,
-        attributes: { exclude: [`createdAt`, `updatedAt`] },
-      }
+      attributes: { exclude: [`updatedAt`] },
+      include: [
+        {
+          model: db.User,
+          attributes: {
+            exclude: [`createdAt`, `updatedAt`, `password`, `email`],
+          },
+        },
+        {
+          model: db.Comment,
+          as: `SubComment`,
+          attributes: {
+            exclude: [`updatedAt`],
+          },
+          include: [
+            {
+              model: db.User,
+              attributes: {
+                exclude: [`createdAt`, `updatedAt`, `password`, `email`],
+              },
+            },
+          ],
+        },
+      ],
     });
     if (!comment) {
       res.status(404).json({ message: `no comment found with this id` });
@@ -60,7 +96,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create a new comment
-router.post("/",tokenAuth, async (req, res) => {
+router.post("/", tokenAuth, async (req, res) => {
   try {
     const newComment = await db.Comment.create(req.body);
     res.status(200).json(newComment);
@@ -71,19 +107,20 @@ router.post("/",tokenAuth, async (req, res) => {
 });
 
 // update a comment
-router.put("/:id", tokenAuth, async (req,res)=>{
-  try{
-      db.Comment.update({
+router.put("/:id", tokenAuth, async (req, res) => {
+  try {
+    db.Comment.update(
+      {
         content: req.body.content,
       },
-      {where:{id:req.params.id}})
-      res.status(200).json({message: `user updated`})
-    
-  }catch(err){
-    console.log(err)
-    res.status(500).json(err)
+      { where: { id: req.params.id } }
+    );
+    res.status(200).json({ message: `user updated` });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
-})
+});
 
 // delete a comment by id
 router.delete("/:id", tokenAuth, async (req, res) => {

@@ -29,6 +29,11 @@ router.get("/:id", async (req, res) => {
         {
           model: db.Trip,
           attributes: { exclude: [`createdAt`, `updatedAt`] },
+          include:{
+            model: db.User,
+            attributes: { exclude: [`createdAt`, `updatedAt`, `password`, `email`] },
+            as: `SavedUser`
+          }
         },
         {
           model: db.Comment,
@@ -48,6 +53,11 @@ router.get("/:id", async (req, res) => {
           model: db.Trip,
           as: `SavedTrip`,
           attributes: { exclude: [`createdAt`, `updatedAt`] },
+          include: {
+            model: db.User,
+            as: `SavedUser`,
+            attributes: { exclude:[`createdAt`, `updatedAt`] }
+          },
           through: { attributes: { exclude: [`createdAt`, `updatedAt`] } },
         },
         {

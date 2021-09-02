@@ -18,7 +18,7 @@ Comment.belongsTo(User);
 Trip.hasMany(Plan);
 Plan.belongsTo(Trip);
 
-Comment.hasMany(Comment)
+Comment.hasMany(Comment,{as: `SubComment`})
 Comment.belongsTo(Comment)
 
 User.hasMany(Trip);
