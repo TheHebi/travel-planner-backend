@@ -2,7 +2,7 @@
 
 Server hosted <a href="https://trips-refocused-server.herokuapp.com/">here</a>.
 
-Trips Refocused deployed <a href="">here</a>.
+Trips Refocused deployed <a href="https://trips-refocused.herokuapp.com/">here</a>.
 
 ![badmath](https://img.shields.io/github/repo-size/TheHebi/travel-planner-backend)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -16,7 +16,7 @@ Trips Refocused deployed <a href="">here</a>.
 
 ## Description:
 
-The purpose of this repository is to create and maintain an external server for the web application <a href="">Trips Refocused</a>.
+The purpose of this repository is to create and maintain an external server for the web application <a href="https://trips-refocused.herokuapp.com/">Trips Refocused</a>.
 
 ## Instructions
 
